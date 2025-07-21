@@ -13,7 +13,7 @@ import {Drawer, Button, Divider,List, ListItem, ListItemButton, ListItemText, Li
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Link from 'next/link';
-
+import { getSearchedBook } from '../lib/api/book-data';
 
 const navItems = [{name: "Home", route: "/"}, {name: "Thinkers", route: "/pages/indiv-page"}, {name: "Explore", route: "/pages/book-pages"}];
 
@@ -62,11 +62,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 export default function SearchAppBar() {
-
+  const [seachInput, setSearchInput] = React.useState("");
+  
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
+  const submitSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const searchResults = await getSearchedBook(seachInput);
+    try{
+      const result = await searchResults;
+      console.log(result);
+    }
+    catch (error) {
+      console.error("Error fetching search results:", error);
+  }
+}
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={handleDrawerToggle}>
@@ -97,23 +110,6 @@ export default function SearchAppBar() {
       </List>
     </Box>
   );
-  //  const drawer = (
-  //   <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-  //     <Typography variant="h6" sx={{ my: 2 }}>
-  //       MUI
-  //     </Typography>
-  //     <Divider />
-  //     <List>
-  //       {navItems.map((item, index) => (
-  //         <ListItem key={index} disablePadding>
-  //           <ListItemButton sx={{ textAlign: 'center' }}>
-  //             <ListItemText primary={item.name} />
-  //           </ListItemButton>
-  //         </ListItem>
-  //       ))}
-  //     </List>
-  //   </Box>
-  // );
   
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -151,10 +147,13 @@ export default function SearchAppBar() {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
+              value={seachInput}
+              onChange={(input) => setSearchInput(input.target.value)}
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
+          <Button type='submit' onClick={submitSearch}>submit</Button>
         </Toolbar>
         <Drawer
           variant="temporary"
