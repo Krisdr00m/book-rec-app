@@ -1,17 +1,9 @@
 import Image from "next/image";
-
+import SearchComponent from "./components/search-component";
 export default function Home() {
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <p className="text-lg">This is a simple Next.js app with Tailwind CSS.</p>
-      <Image
-        src="/next.svg"
-        alt="Next.js logo"
-        width={180}
-        height={38}
-        priority
-      />
+      <SearchComponent />
     </div>
     // <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
     //   <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
