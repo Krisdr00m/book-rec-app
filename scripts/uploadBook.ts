@@ -52,7 +52,7 @@ export async function uploadBook() {
                 cover_i: book.cover_i,
                 first_publish_year: book.first_publish_year
             });
-                console.log(`nigga we logged ${book.title} by ${book.author_name[0]} successfully`);
+                console.log(`logged ${book.title} by ${book.author_name[0]} successfully`);
             } catch (error) {
                 console.error('Error uploading book:', error);
             }

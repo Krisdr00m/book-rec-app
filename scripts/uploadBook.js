@@ -112,7 +112,7 @@ function uploadBook() {
                         })];
                 case 4:
                     _a.sent();
-                    console.log("nigga we logged ".concat(book.title, " by ").concat(book.author_name[0], " successfully"));
+                    console.log("logged ".concat(book.title, " by ").concat(book.author_name[0], " successfully"));
                     return [3 /*break*/, 6];
                 case 5:
                     error_1 = _a.sent();
