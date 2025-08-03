@@ -4,7 +4,7 @@ import * as fs from 'fs';
 // Create a function that uploads each book individually
 //Create a function that reads a file and uploads it to Supabase storage
 const supabase = createSupaClient();
-const filePath = 'C:/Users/yenkr/OneDrive/Desktop/Coding-Shii/Python-Scripts/book-data.json';
+const filePath = '';
 
 //This is just mock data and test to see how I wouldmanipulate the data for uploading
 // const mock_data =[ {
