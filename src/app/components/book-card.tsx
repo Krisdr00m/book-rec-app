@@ -6,20 +6,32 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function MediaCard() {
+
+interface MediaCardProps {  
+    title?: string;
+    image?: string;
+    description?: string;
+    author?: string;
+}
+export default function MediaCard({
+    title = 'Red Rising', 
+    image = 'https://m.media-amazon.com/images/I/81wGzzxqHSL.jpg', 
+    description = 'Greatest book in all of fiction',
+    author = 'Pierce Brown'
+}: MediaCardProps){
   return (
-    <Card sx={{ maxWidth: 200 }}>
+    <Card sx={{ minWidth: 150, maxWidth: 200, width:400 }}>
       <CardMedia
         sx={{ height: 240 }}
-        image="https://m.media-amazon.com/images/I/81wGzzxqHSL.jpg"
-        title="green iguana"
+        image={image}
+        title={title}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          {title}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Lizards 
+          {author} 
         </Typography>
       </CardContent>
       <CardActions>
