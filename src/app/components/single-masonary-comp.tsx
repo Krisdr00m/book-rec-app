@@ -19,10 +19,10 @@ let tempBook: BookMasonarySingleProps['book'] = {
 
 export default function BookMasonarySingle({book = tempBook}: BookMasonarySingleProps) {
     return (
-        <div className="book-masonary-single">
+        <div style ={{minHeight: '200px'}}className="book-masonary-single">
             <a href={book.indivLink} className="book-link">
-                <Paper square = {false} elevation={0} className="book-paper">
-                    <img style = {{height: '50%'}} src={book.coverImage} alt={book.title} className="book-cover" />
+                <Paper sx={{minHeight: '200px'}} square = {false} elevation={20} className="book-paper">
+                    <img src={book.coverImage} alt={book.title} className="book-cover" />
                     <h3 className="book-title">{book.title}</h3>  
                 </Paper>
 

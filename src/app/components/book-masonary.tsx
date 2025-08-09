@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper';
 import Masonry from '@mui/lab/Masonry';
 import { styled } from '@mui/material/styles';
 import BookMasonarySingle from './single-masonary-comp';
-import { title } from 'process';
+
 
 let books = Array.from({length: 50}, (_, i) =>({
     title: 'Red Rising ${i}' ,
