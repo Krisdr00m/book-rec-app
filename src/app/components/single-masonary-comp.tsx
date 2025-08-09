@@ -1,3 +1,8 @@
+import * as React from 'react';
+import Paper from '@mui/material/Paper';
+
+
+
 interface BookMasonarySingleProps {
     book: {
         title: string;
@@ -16,8 +21,11 @@ export default function BookMasonarySingle({book = tempBook}: BookMasonarySingle
     return (
         <div className="book-masonary-single">
             <a href={book.indivLink} className="book-link">
-                <img src={book.coverImage} alt={book.title} className="book-cover" />
-                <h3 className="book-title">{book.title}</h3>
+                <Paper square = {false} elevation={0} className="book-paper">
+                    <img style = {{height: '50%'}} src={book.coverImage} alt={book.title} className="book-cover" />
+                    <h3 className="book-title">{book.title}</h3>  
+                </Paper>
+
             </a>
         </div>
     );

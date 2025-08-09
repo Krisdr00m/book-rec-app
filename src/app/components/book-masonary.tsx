@@ -14,20 +14,20 @@ let books = Array.from({length: 50}, (_, i) =>({
 
 export default function BookMasonary() {
     return(
-        <Box sx={{ width: '100%', height: 500, overflowY: 'auto' }}>
+        <Box sx={{ width: '100%', height: '90%', overflowY: 'auto' }}>
             <Masonry
-                columns={3}
-                spacing={2}
+                // columns={3}
+                 columns={{ xs: 1, sm: 2, md: 3 }}
+
+                spacing={5}
                 sx={{
-                    '& > div': {
-                        height: 200,
-                    },
+                    // maxHeight: 300,
+                    // padding: '16px 24px',
                 }}
+                //  columns={{ xs: 1, sm: 2, md: 3 }}
             >
                 {books.map((BookComponent, index) => (
-                    <Paper key={index} elevation={3}>
-                        <BookMasonarySingle book={BookComponent} />
-                    </Paper>
+                        <BookMasonarySingle key = {index} book={BookComponent} />
                 ))}
             </Masonry>
         </Box>
