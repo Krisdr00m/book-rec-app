@@ -9,6 +9,7 @@ interface HorizontalSliderProps {
   sectionHeader?: string;
 }
 
+// This component creates a horizontal slider with left and right navigation buttons to scroll through the books the user can explore
 export const HorizontalSlider = ({
   children,
   scrollAmount = 600,

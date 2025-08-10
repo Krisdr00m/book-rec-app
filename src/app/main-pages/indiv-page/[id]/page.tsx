@@ -1,16 +1,12 @@
 import { Paper, Typography } from "@mui/material";
 import MediaCard from "@/app/components/book-card";
-export default function Home() {
+export default function UniqueBookPage() {
     return (
         <div style={{ display: "flex", flexDirection: "row", padding: "20px" }}>
-            <div style ={{width:"30%", paddingTop: '75px', paddingRight: "20px", position: "fixed"}}>
-                {/* <Paper sx ={{ display: "flex", alignItems: "center", justifyContent: "center"}}> */} 
+            <div style ={{width:"30%", paddingTop: '75px', paddingRight: "20px", position: "fixed"}}> 
                     <div style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
                         <MediaCard isHome={false} />
                     </div>
-                    {/* <MediaCard isHome={false} /> */}
-                {/* <h1>Individual Page</h1> */}
-                {/* </Paper> */}
             </div>
             <div style={{maxWidth: '100%', paddingLeft: "35%"}}>
                 <Typography variant="h2">Title</Typography>

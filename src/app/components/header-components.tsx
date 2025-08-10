@@ -6,7 +6,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Drawer, Button, Divider,List, ListItem, ListItemButton, ListItemText, ListItemIcon} from '@mui/material';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
@@ -14,7 +13,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import Link from 'next/link';
 
 
-const navItems = [{name: "Home", route: "/"}, {name: "Thinkers", route: "/pages/indiv-page"}, {name: "Explore", route: "/pages/book-pages"}];
+const navItems = [{name: "Home", route: "/"}, {name: "Thinkers", route: "/"}, {name: "Explore", route: "/main-pages/book-pages"}];
 
 
 
@@ -54,24 +53,7 @@ export default function HeaderAppBar() {
       </List>
     </Box>
   );
-  //  const drawer = (
-  //   <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-  //     <Typography variant="h6" sx={{ my: 2 }}>
-  //       MUI
-  //     </Typography>
-  //     <Divider />
-  //     <List>
-  //       {navItems.map((item, index) => (
-  //         <ListItem key={index} disablePadding>
-  //           <ListItemButton sx={{ textAlign: 'center' }}>
-  //             <ListItemText primary={item.name} />
-  //           </ListItemButton>
-  //         </ListItem>
-  //       ))}
-  //     </List>
-  //   </Box>
-  // );
-  
+
   return (
     <Box sx={{ flexGrow: 1, width: '100%' }}>
       <AppBar position="static">
