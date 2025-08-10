@@ -38,18 +38,18 @@ export default function MediaCard({
       return(
         <Card sx={{ minWidth: 150, maxWidth: 200}}>
           <CardMedia
-            sx={{ height: 240 }}
+            sx={{height: '25vh'}}
             image={image}
             title={title}
           />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+          {/* <CardContent sx={{ height: '8vh' }}>
+            <Typography sx={{objectFit: 'contain'}} gutterBottom variant="h5" component="div">
               {title}
             </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               {author} 
             </Typography>
-          </CardContent>
+          </CardContent> */}
           <CardActions>
             <Button size="small">Share</Button>
             <Button size="small">Learn More</Button>

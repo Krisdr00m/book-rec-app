@@ -16,7 +16,7 @@ export default function BookMasonary() {
     return(
         <Box sx={{ width: '100%', height: '90%'}}>
             <Masonry
-                 columns={{ xs: 3, sm: 4, md: 5, lg: 6, xl: 7 }}
+                 columns={{ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 }}
                 spacing={5}
                 sx={{
                     // maxHeight: 300,
