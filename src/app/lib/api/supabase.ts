@@ -2,8 +2,9 @@ import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = process.env.SUPABASE_URL as string
 const supabaseKey = process.env.SUPABASE_KEY as string
+const supabaseService = process.env.SUPABSE_SERVICE_ROLE as string
 
-if (!supabaseUrl || !supabaseKey) {
+if (!supabaseUrl || !supabaseKey || !supabaseService) {
   console.log(supabaseUrl, supabaseKey);
   throw new Error('Missing Supabase URL or Key in environment variables');
 }
@@ -15,3 +16,15 @@ export function createSupaClient() {
   console.log('Using Supabase Key:', supabaseKey ? 'Provided' : 'Not Provided');
   return createClient(supabaseUrl, supabaseKey);
 };
+
+
+export function createAuthClient(){
+  return createClient(supabaseUrl,supabaseService, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false
+  }
+})
+
+}
+

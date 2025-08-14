@@ -40,10 +40,11 @@ exports.uploadCovers = uploadCovers;
 require('dotenv').config({ path: '.env' });
 var supabase_1 = require("../src/app/lib/api/supabase");
 // import {getCoverByID} from '../src/app/lib/api/book-data';
-var fs = require("fs");
-var supabase = (0, supabase_1.createSupaClient)();
-var filePath = 'C:\Users\yenkr\OneDrive\Desktop\Coding-Shii\Python-Scripts\book-data.json';
-var basePath = 'C:\Users\yenkr\OneDrive\Desktop\Coding-Shii\Python-Scripts\book_covers';
+var fs_1 = require("fs");
+var supabase = (0, supabase_1.createAuthClient)();
+// const {data:user} = await supabase.auth.getUser()
+var filePath = 'C:/Users/yenkr/OneDrive/Desktop/Coding-Shii/Python-Scripts/book-data.json';
+var basePath = 'C:/Users/yenkr/OneDrive/Desktop/Coding-Shii/Python-Scripts/book_covers';
 function read_File() {
     return __awaiter(this, void 0, void 0, function () {
         var data, err_1;
@@ -51,7 +52,7 @@ function read_File() {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, fs.promises.readFile(filePath, 'utf8')];
+                    return [4 /*yield*/, fs_1.promises.readFile(filePath, 'utf8')];
                 case 1:
                     data = _a.sent();
                     console.log('File read successfully.');
@@ -66,39 +67,47 @@ function read_File() {
     });
 }
 function loopFolder(path, book_title, size) {
-    var imagePath = '';
-    fs.readdir(path, function (err, files) {
-        if (err) {
-            console.error('Error reading directory:', err);
-            return;
-        }
-        files.forEach(function (file) {
-            if (size === 'S') {
-                if (file.includes(book_title) && (file.includes('-S.jpg'))) {
-                    imagePath = "".concat(path, "/").concat(file);
-                    return imagePath;
-                }
-            }
-            else {
-                if (file.includes(book_title) && (file.includes('-M.jpg'))) {
-                    imagePath = "".concat(path, "/").concat(file);
-                    return imagePath;
-                    ;
-                }
+    return __awaiter(this, void 0, void 0, function () {
+        var imagePath, files, _i, files_1, file;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    imagePath = '';
+                    return [4 /*yield*/, fs_1.promises.readdir(path)];
+                case 1:
+                    files = _a.sent();
+                    for (_i = 0, files_1 = files; _i < files_1.length; _i++) {
+                        file = files_1[_i];
+                        if (size === 'S') {
+                            if (file.includes(book_title.replace(/\s+/g, "_")) && (file.includes('_S.jpg'))) {
+                                imagePath = "".concat(path, "/").concat(file);
+                                // console.log(imagePath)
+                                return [2 /*return*/, imagePath];
+                            }
+                        }
+                        else {
+                            if (file.includes(book_title.replace(/\s+/g, "_")) && (file.includes('_M.jpg'))) {
+                                imagePath = "".concat(path, "/").concat(file);
+                                return [2 /*return*/, imagePath];
+                                ;
+                            }
+                        }
+                    }
+                    return [2 /*return*/, imagePath];
             }
         });
     });
-    return imagePath;
 }
-function uploadSupabase(coverImageUrl, bookTitle) {
+function uploadSupabase(coverImageUrl, bookTitle, size) {
     return __awaiter(this, void 0, void 0, function () {
         var fileBuffer, res;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, fs.readFileSync(coverImageUrl)];
+                case 0: return [4 /*yield*/, fs_1.promises.readFile(coverImageUrl)];
                 case 1:
                     fileBuffer = _a.sent();
-                    return [4 /*yield*/, supabase.storage.from('Covers').upload(coverImageUrl, fileBuffer, {
+                    console.log(fileBuffer);
+                    return [4 /*yield*/, supabase.storage.from('book-covers').upload("test_images/".concat(bookTitle, "-").concat(size, ".jpg"), fileBuffer, {
                             contentType: 'image/jpeg',
                             upsert: true,
                         })];
@@ -120,11 +129,11 @@ function uploadSupabase(coverImageUrl, bookTitle) {
 }
 function uploadCovers() {
     return __awaiter(this, void 0, void 0, function () {
-        var data, _i, data_1, book, cover_i, bookTitle, coverImageSmall, coverImageMedium, error_1, error_2;
+        var data, _i, data_1, book, cover_i, bookTitle, coverImageMedium, error_1, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 13, , 14]);
+                    _a.trys.push([0, 11, , 12]);
                     console.log("reading file...");
                     return [4 /*yield*/, read_File()];
                 case 1:
@@ -132,49 +141,43 @@ function uploadCovers() {
                     _i = 0, data_1 = data;
                     _a.label = 2;
                 case 2:
-                    if (!(_i < data_1.length)) return [3 /*break*/, 12];
+                    if (!(_i < data_1.length)) return [3 /*break*/, 10];
                     book = data_1[_i];
                     _a.label = 3;
                 case 3:
-                    _a.trys.push([3, 10, , 11]);
+                    _a.trys.push([3, 8, , 9]);
                     cover_i = book.cover_i;
                     bookTitle = book.title;
-                    if (!cover_i) return [3 /*break*/, 9];
-                    console.log("Uploading cover for ".concat(book.title, " by ").concat(book.author_name[0]));
-                    coverImageSmall = loopFolder(basePath, bookTitle, 'S');
-                    if (!(coverImageSmall != '')) return [3 /*break*/, 5];
-                    return [4 /*yield*/, uploadSupabase(coverImageSmall, bookTitle)];
+                    if (!cover_i) return [3 /*break*/, 7];
+                    return [4 /*yield*/, loopFolder(basePath, bookTitle, 'M')];
                 case 4:
-                    _a.sent();
-                    return [3 /*break*/, 6];
+                    coverImageMedium = _a.sent();
+                    if (!(coverImageMedium != '')) return [3 /*break*/, 6];
+                    return [4 /*yield*/, uploadSupabase(coverImageMedium, bookTitle, 'M')];
                 case 5:
-                    console.log("No small cover found for ".concat(bookTitle));
-                    _a.label = 6;
-                case 6:
-                    coverImageMedium = loopFolder(basePath, bookTitle, 'M');
-                    if (!(coverImageMedium != '')) return [3 /*break*/, 8];
-                    return [4 /*yield*/, uploadSupabase(coverImageMedium, bookTitle)];
-                case 7:
                     _a.sent();
-                    return [3 /*break*/, 9];
-                case 8:
+                    return [3 /*break*/, 7];
+                case 6:
                     console.log("No medium cover found for ".concat(bookTitle));
-                    _a.label = 9;
-                case 9: return [3 /*break*/, 11];
-                case 10:
+                    _a.label = 7;
+                case 7: return [3 /*break*/, 9];
+                case 8:
                     error_1 = _a.sent();
                     console.error('Error uploading cover:', error_1);
-                    return [3 /*break*/, 11];
-                case 11:
+                    return [3 /*break*/, 9];
+                case 9:
                     _i++;
                     return [3 /*break*/, 2];
-                case 12: return [3 /*break*/, 14];
-                case 13:
+                case 10: return [3 /*break*/, 12];
+                case 11:
                     error_2 = _a.sent();
                     console.error('Error reading file:', error_2);
-                    return [3 /*break*/, 14];
-                case 14: return [2 /*return*/];
+                    return [3 /*break*/, 12];
+                case 12: return [2 /*return*/];
             }
         });
     });
 }
+uploadCovers()
+    .then(function () { return console.log('All covers uploaded successfully.'); })
+    .catch(function (error) { return console.error('Error in uploadCovers:', error); });

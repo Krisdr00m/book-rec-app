@@ -1,16 +1,15 @@
 require('dotenv').config({ path: '.env' });
-import { createSupaClient } from "../src/app/lib/api/supabase";
-// import {getCoverByID} from '../src/app/lib/api/book-data';
-import * as fs from 'fs';
 
-const supabase = createSupaClient();
-const filePath = 'C:\Users\yenkr\OneDrive\Desktop\Coding-Shii\Python-Scripts\book-data.json';
-const basePath = 'C:\Users\yenkr\OneDrive\Desktop\Coding-Shii\Python-Scripts\book_covers'
+import { createAuthClient } from "../src/app/lib/api/supabase";
+import {promises as fs} from 'fs';
 
+const supabase = createAuthClient();
+const filePath = '';
+const basePath = ''
 
 async function read_File(): Promise<any[]> {
     try {
-        const data = await fs.promises.readFile(filePath, 'utf8');
+        const data = await fs.readFile(filePath, 'utf8');
         console.log('File read successfully.');
         return JSON.parse(data);
     } catch (err) {
@@ -19,37 +18,32 @@ async function read_File(): Promise<any[]> {
     }
 }
 
-function loopFolder(path: string, book_title: string, size: string): string{
+async function loopFolder(path: string, book_title: string, size: string): Promise<string>{
     let imagePath = ''
-    fs.readdir(path, (err, files) =>{
-        if (err) {
-            console.error('Error reading directory:', err);
-            return;
-        }
+    const files = await fs.readdir(path);
 
-        files.forEach(file => {
-            if(size === 'S'){
-                if (file.includes(book_title) && (file.includes('-S.jpg'))){
-                    imagePath = `${path}/${file}`;
-                    return imagePath;
-                }
+    for (const file of files){
+        if(size === 'S'){
+            if (file.includes(book_title.replace(/\s+/g, "_")) && (file.includes('_S.jpg'))){
+                imagePath = `${path}/${file}`;
+                console.log(imagePath)
+                return imagePath;
             }
-            else{
-                if (file.includes(book_title) && (file.includes('-M.jpg'))){
-                    imagePath = `${path}/${file}`;
-                    return imagePath;;
-                }
         }
-
-        }
-    );
-})
+        else{
+            if (file.includes(book_title.replace(/\s+/g, "_")) && (file.includes('_M.jpg'))){
+                imagePath = `${path}/${file}`;
+                return imagePath;;
+            }
+    }
+    }
     return imagePath;
 }
 
-async function uploadSupabase(coverImageUrl: string, bookTitle: string) {
-    let fileBuffer = await fs.readFileSync(coverImageUrl);
-    const res = await supabase.storage.from('Covers').upload(coverImageUrl, fileBuffer, { 
+async function uploadSupabase(coverImageUrl: string, bookTitle: string, size: string) {
+    let fileBuffer = await fs.readFile(coverImageUrl);
+    console.log(fileBuffer)
+    const res = await supabase.storage.from('book-covers').upload(`test_images/${bookTitle}-${size}.jpg`, fileBuffer, { 
         contentType: 'image/jpeg',
         upsert: true,
     });
@@ -74,20 +68,19 @@ export async function uploadCovers(){
                 let cover_i = book.cover_i
                 let bookTitle = book.title
                 if(cover_i){
-                    console.log(`Uploading cover for ${book.title} by ${book.author_name[0]}`);
-                    // const {data , error} = await supabase.storage.from('Covers').upload(`${basePath}/${cover
-                    const coverImageSmall =  loopFolder(basePath, bookTitle, 'S');
+                    const coverImageSmall =  await loopFolder(basePath, bookTitle, 'S');
+                    console.log(coverImageSmall)
                     if (coverImageSmall != '') {
-                        await uploadSupabase(coverImageSmall, bookTitle);
+                        await uploadSupabase(coverImageSmall, bookTitle, 'S');
 
                     }
                     else{
                         console.log(`No small cover found for ${bookTitle}`);
                     }
 
-                    const coverImageMedium = loopFolder(basePath, bookTitle, 'M');
+                    const coverImageMedium = await loopFolder(basePath, bookTitle, 'M');
                     if (coverImageMedium != '') {
-                        await uploadSupabase(coverImageMedium, bookTitle);
+                        await uploadSupabase(coverImageMedium, bookTitle, 'M');
                     } else {
                         console.log(`No medium cover found for ${bookTitle}`);
                     }
@@ -100,3 +93,7 @@ export async function uploadCovers(){
         console.error('Error reading file:', error);
     }
 }
+
+uploadCovers()
+    .then(() => console.log('All covers uploaded successfully.'))
+    .catch((error) => console.error('Error in uploadCovers:', error));
