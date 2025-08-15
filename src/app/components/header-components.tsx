@@ -11,14 +11,15 @@ import {Drawer, Button, Divider,List, ListItem, ListItemButton, ListItemText, Li
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Link from 'next/link';
-
+import { getSearchedBook } from '../lib/api/book-data';
 
 const navItems = [{name: "Home", route: "/"}, {name: "Thinkers", route: "/"}, {name: "Explore", route: "/main-pages/book-pages"}];
 
 
 
 export default function HeaderAppBar() {
-
+  const [seachInput, setSearchInput] = React.useState("");
+  
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -53,7 +54,6 @@ export default function HeaderAppBar() {
       </List>
     </Box>
   );
-
   return (
     <Box sx={{ flexGrow: 1, width: '100%' }}>
       <AppBar position="static">
