@@ -6,80 +6,24 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import {Drawer, Button, Divider,List, ListItem, ListItemButton, ListItemText, ListItemIcon} from '@mui/material';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Link from 'next/link';
 import { getSearchedBook } from '../lib/api/book-data';
 
-const navItems = [{name: "Home", route: "/"}, {name: "Thinkers", route: "/pages/indiv-page"}, {name: "Explore", route: "/pages/book-pages"}];
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  width: '100%',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
-  },
-}));
+const navItems = [{name: "Home", route: "/"}, {name: "Thinkers", route: "/"}, {name: "Explore", route: "/main-pages/book-pages"}];
 
 
 
-export default function SearchAppBar() {
+export default function HeaderAppBar() {
   const [seachInput, setSearchInput] = React.useState("");
   
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-
-  const submitSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const searchResults = await getSearchedBook(seachInput);
-    try{
-      const result = await searchResults;
-      console.log(result);
-    }
-    catch (error) {
-      console.error("Error fetching search results:", error);
-  }
-}
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={handleDrawerToggle}>
@@ -110,11 +54,10 @@ export default function SearchAppBar() {
       </List>
     </Box>
   );
-  
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, width: '100%' }}>
       <AppBar position="static">
-        <Toolbar sx={{ backgroundColor: "#123d1dff" }}>
+        <Toolbar sx={{ backgroundColor: "#7ba285ff" }}>
           <IconButton
             size="large"
             edge="start"
@@ -131,7 +74,7 @@ export default function SearchAppBar() {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            Kris' Book Club
+            The Book Nook
           </Typography>
 
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
@@ -141,19 +84,6 @@ export default function SearchAppBar() {
               </Button>
             ))}
           </Box>
-
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              value={seachInput}
-              onChange={(input) => setSearchInput(input.target.value)}
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          <Button type='submit' onClick={submitSearch}>submit</Button>
         </Toolbar>
         <Drawer
           variant="temporary"

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import * as React from 'react';
-import SearchAppBar from "./components/header-components";
+import HeaderAppBar from "./components/header-components";
 import MuiProvider from "./theme-container";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 const geistSans = Geist({
@@ -31,10 +31,11 @@ export default function RootLayout({
     <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          style={{backgroundColor: 'white', color: 'black'}}
         >
           <AppRouterCacheProvider>
             {/* <MuiProvider> */}
-              <SearchAppBar /> 
+              <HeaderAppBar /> 
               {children}
             {/* </MuiProvider> */}
           </AppRouterCacheProvider>
