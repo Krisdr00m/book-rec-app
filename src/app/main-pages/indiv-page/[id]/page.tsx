@@ -1,5 +1,5 @@
 import { Paper, Typography } from "@mui/material";
-import MediaCard from "@/app/components/book-card";
+import MediaCard from "@/components/book-components/book-card";
 export default function UniqueBookPage() {
     return (
         <div style={{ display: "flex", flexDirection: "row", padding: "20px" }}>

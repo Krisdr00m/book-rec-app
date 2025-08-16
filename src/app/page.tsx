@@ -1,8 +1,7 @@
 import Image from "next/image";
-import SearchComponent from "./components/search-component";
-import MediaCard from "./components/book-card";
-import HorizontalSlider from "./components/slide-panel";
-import { Card, CardContent, Typography } from "@mui/material";
+import SearchComponent from "@/components/search-actions-components/search-component";
+import MediaCard from "@/components/book-components/book-card";
+import HorizontalSlider from "@/components/book-components/slide-panel";
 
 const items = Array.from({ length: 20 }, (_, i) => `Item ${i + 1}`);
 

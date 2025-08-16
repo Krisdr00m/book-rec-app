@@ -1,4 +1,4 @@
-import BookMasonary from "@/app/components/book-masonary";
+import BookMasonary from "@/components/book-components/book-masonary";
 
 export default function Home() {
   return (

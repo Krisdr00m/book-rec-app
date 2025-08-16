@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import * as React from 'react';
-import HeaderAppBar from "./components/header-components";
+import HeaderAppBar from "@/components/layout-components/header-components";
 import MuiProvider from "./theme-container";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 const geistSans = Geist({
