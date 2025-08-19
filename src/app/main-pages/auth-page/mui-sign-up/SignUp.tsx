@@ -13,9 +13,10 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
-import AppTheme from '../shared-theme/AppTheme';
-import ColorModeSelect from '../shared-theme/ColorModeSelect';
+import AppTheme from '../../../themes/AppTheme';
+import ColorModeSelect from '../../../themes/ColorModeSelect';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/CustomIcons';
+import { createSupaClient } from '@/src/app/lib/api/supabase';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -59,6 +60,21 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
+
+async function signUpNewUser(email:string, password:string) {
+  const supabase = createSupaClient();
+
+  const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+
+      options: {
+        emailRedirectTo: 'https://example.com/welcome',
+      },
+    })
+
+  // TODO: Store this key somewhere need to look at documentation again(data.session.accesskey)
+}
 export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
@@ -67,7 +83,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
 
-  const validateInputs = () => {
+  const validateInputs = async () => {
     const email = document.getElementById('email') as HTMLInputElement;
     const password = document.getElementById('password') as HTMLInputElement;
     const name = document.getElementById('name') as HTMLInputElement;
@@ -101,7 +117,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
       setNameErrorMessage('');
     }
 
-    return isValid;
+    signUpNewUser(email.value, password.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -116,6 +132,8 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
       email: data.get('email'),
       password: data.get('password'),
     });
+
+
   };
 
   return (

@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
+import { createSupaClient } from '@/src/app/lib/api/supabase';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -85,6 +86,26 @@ export default function SignInCard() {
 
     return isValid;
   };
+
+  async function signInWithEmail(email:string, password:string) {
+
+    const isValid = validateInputs();
+
+    if(isValid){
+      const supabase = createSupaClient();
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      })  
+    }
+    else{
+      alert('Could not sign user in')
+    }
+
+
+
+  }
 
   return (
     <Card variant="outlined">

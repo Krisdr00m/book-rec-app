@@ -6,10 +6,16 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import { createSupaClient } from '@/src/app/lib/api/supabase';
 
 interface ForgotPasswordProps {
   open: boolean;
   handleClose: () => void;
+}
+
+async function resetPassword(email: string) {
+  const supabase = createSupaClient();
+  const { data, error } = await supabase.auth.resetPasswordForEmail(email)
 }
 
 export default function ForgotPassword({ open, handleClose }: ForgotPasswordProps) {
