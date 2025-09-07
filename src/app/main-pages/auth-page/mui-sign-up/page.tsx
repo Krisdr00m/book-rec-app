@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -64,17 +65,20 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 async function signUpNewUser(email:string, password:string) {
   const supabase = createSupaClient();
 
-  const { data, error } = await supabase.auth.signUp({
+      await supabase.auth.signUp({
       email: email,
       password: password,
+      // options: {
+      //   emailRedirectTo: 'https://example.com/welcome',
+      // },
 
-      options: {
-        emailRedirectTo: 'https://example.com/welcome',
-      },
-    })
-
-  // TODO: Store this key somewhere need to look at documentation again(data.session.accesskey)
+      }).then((data) => {
+        console.log(data);
+      }).catch((error) => {
+        throw new Error(error.message);
+      });
 }
+
 export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
@@ -83,7 +87,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
 
-  const validateInputs = async () => {
+  const validateInputs = () => {
     const email = document.getElementById('email') as HTMLInputElement;
     const password = document.getElementById('password') as HTMLInputElement;
     const name = document.getElementById('name') as HTMLInputElement;
@@ -116,8 +120,6 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
       setNameError(false);
       setNameErrorMessage('');
     }
-
-    signUpNewUser(email.value, password.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -126,14 +128,15 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
       return;
     }
     const data = new FormData(event.currentTarget);
+    console.log('data from form: ', data)
+    signUpNewUser(data.get('email') as string, data.get('password') as string);
+
     console.log({
       name: data.get('name'),
       lastName: data.get('lastName'),
       email: data.get('email'),
       password: data.get('password'),
     });
-
-
   };
 
   return (

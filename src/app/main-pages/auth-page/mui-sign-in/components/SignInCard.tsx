@@ -48,12 +48,15 @@ export default function SignInCard() {
     setOpen(false);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     if (emailError || passwordError) {
       event.preventDefault();
       return;
     }
     const data = new FormData(event.currentTarget);
+
+    await signInWithEmail(data.get('email') as string, data.get('password') as string)
+
     console.log({
       email: data.get('email'),
       password: data.get('password'),
@@ -88,24 +91,19 @@ export default function SignInCard() {
   };
 
   async function signInWithEmail(email:string, password:string) {
-
-    const isValid = validateInputs();
-
-    if(isValid){
       const supabase = createSupaClient();
 
-      const { data, error } = await supabase.auth.signInWithPassword({
+      await supabase.auth.signInWithPassword({
         email: email,
         password: password,
-      })  
+      }).then((response) => {
+        console.log('User signed in successfully', response);
+      }).catch((error) => { 
+        alert('Error signing in: ' + error.message);
+      }); 
+      
+        // TODO: Store this key somewhere need to look at documentation again(data.session.accesskey)
     }
-    else{
-      alert('Could not sign user in')
-    }
-
-
-
-  }
 
   return (
     <Card variant="outlined">
