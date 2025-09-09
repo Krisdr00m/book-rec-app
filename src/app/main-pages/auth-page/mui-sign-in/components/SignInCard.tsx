@@ -90,20 +90,24 @@ export default function SignInCard() {
     return isValid;
   };
 
-  async function signInWithEmail(email:string, password:string) {
-      const supabase = createSupaClient();
+async function signInWithEmail(email: string, password: string) {
+  console.log("helper entered");
 
-      await supabase.auth.signInWithPassword({
-        email: email,
-        password: password,
-      }).then((response) => {
-        console.log('User signed in successfully', response);
-      }).catch((error) => { 
-        alert('Error signing in: ' + error.message);
-      }); 
-      
-        // TODO: Store this key somewhere need to look at documentation again(data.session.accesskey)
-    }
+  const supabase = createSupaClient();
+  console.log("client created:", supabase);
+
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    console.log("sign in data:", data, error);
+    return { data, error };
+  } catch (err) {
+    console.error("sign in threw:", err);
+    throw err;
+  }
+}
 
   return (
     <Card variant="outlined">

@@ -65,18 +65,15 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 async function signUpNewUser(email:string, password:string) {
   const supabase = createSupaClient();
 
-      await supabase.auth.signUp({
+      const {data, error} = await supabase.auth.signUp({
       email: email,
       password: password,
       // options: {
-      //   emailRedirectTo: 'https://example.com/welcome',
+      //   emailRedirectTo: 'https://localhost:3000/',
       // },
 
-      }).then((data) => {
-        console.log(data);
-      }).catch((error) => {
-        throw new Error(error.message);
       });
+      return {authData: data, error: error};
 }
 
 export default function SignUp(props: { disableCustomTheme?: boolean }) {
@@ -87,6 +84,10 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
 
+  /**
+   * TODO: At some point do server-side validation:
+   * reference link: https://nextjs.org/docs/app/guides/authentication
+  **/
   const validateInputs = () => {
     const email = document.getElementById('email') as HTMLInputElement;
     const password = document.getElementById('password') as HTMLInputElement;
@@ -122,20 +123,22 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     if (nameError || emailError || passwordError) {
       event.preventDefault();
       return;
     }
     const data = new FormData(event.currentTarget);
     console.log('data from form: ', data)
-    signUpNewUser(data.get('email') as string, data.get('password') as string);
+    const {authData, error} = await signUpNewUser(data.get('email') as string, data.get('password') as string);
 
     console.log({
-      name: data.get('name'),
-      lastName: data.get('lastName'),
-      email: data.get('email'),
-      password: data.get('password'),
+      dataFn: authData, 
+      error: error
+      // name: data.get('name'),
+      // lastName: data.get('lastName'),
+      // email: data.get('email'),
+      // password: data.get('password'),
     });
   };
 

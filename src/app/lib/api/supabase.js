@@ -16,6 +16,8 @@ function createSupaClient() {
     console.log('Using Supabase Key:', supabaseKey ? 'Provided' : 'Not Provided');
     return (0, supabase_js_1.createClient)(supabaseUrl, supabaseKey);
 }
+
+
 ;
 function createAuthClient() {
     return (0, supabase_js_1.createClient)(supabaseUrl, supabaseService, {
