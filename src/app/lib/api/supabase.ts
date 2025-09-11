@@ -30,6 +30,5 @@ export function createAuthClient(){
     persistSession: false
   }
 })
-
 }
 

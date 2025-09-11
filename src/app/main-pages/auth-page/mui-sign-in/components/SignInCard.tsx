@@ -13,7 +13,8 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './CustomIcons';
-import { createSupaClient } from '@/src/app/lib/api/supabase';
+import { signInWithEmail } from '@/src/app/lib/api/auth-actions';
+import { useRouter } from 'next/navigation';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -34,6 +35,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 export default function SignInCard() {
+  const router = useRouter()
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
@@ -49,13 +51,20 @@ export default function SignInCard() {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
-      return;
-    }
+    event.preventDefault();
+
     const data = new FormData(event.currentTarget);
 
-    await signInWithEmail(data.get('email') as string, data.get('password') as string)
+    const {loginData,loginError} = await signInWithEmail(data.get('email') as string, data.get('password') as string)
+    if(loginData.user){
+      console.log("login successful, redirecting...");  
+      router.push("main-pages/indiv-page/1")
+    }
+    else{
+      console.log("login error:", loginError);
+      setPasswordError(true);
+      setPasswordErrorMessage('Invalid email or password.');
+    }
 
     console.log({
       email: data.get('email'),
@@ -89,25 +98,6 @@ export default function SignInCard() {
 
     return isValid;
   };
-
-async function signInWithEmail(email: string, password: string) {
-  console.log("helper entered");
-
-  const supabase = createSupaClient();
-  console.log("client created:", supabase);
-
-  try {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    console.log("sign in data:", data, error);
-    return { data, error };
-  } catch (err) {
-    console.error("sign in threw:", err);
-    throw err;
-  }
-}
 
   return (
     <Card variant="outlined">
