@@ -37,6 +37,8 @@ export default function RootLayout({
   useEffect(() => {
     const fetchUser = async () => {
       const supabase = await createBrowserCli();
+      //TODO: need to filter based on the action that is happening so that the session ins managed depending on the action
+      //Right now only have login in place so need to cover all the other cases
       const { data } =  await supabase.auth.onAuthStateChange((event, session) => {
         setUser(session?.user || null);
       });
