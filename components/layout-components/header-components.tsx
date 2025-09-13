@@ -11,7 +11,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Link from 'next/link';
 
-const navItems = [{name: "Home", route: "/"}, {name: "Thinkers", route: "/"}, {name: "Explore", route: "/main-pages/book-pages"}];
+const navItems = [{name: "Home", route: "/"}, {name: "Thinkers", route: "/"}, {name: "Explore", route: "/general-pages/main-pages/book-pages"}];
 
 
 
