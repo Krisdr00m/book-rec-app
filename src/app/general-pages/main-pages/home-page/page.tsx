@@ -5,7 +5,6 @@ import HorizontalSlider from "@/components/book-components/slide-panel";
 
 export default function HomePage(){
     const items = Array.from({ length: 20 }, (_, i) => `Item ${i + 1}`)
-    
     return(
         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '16px 24px'}}>
         <div style={{width: '75%'}}>

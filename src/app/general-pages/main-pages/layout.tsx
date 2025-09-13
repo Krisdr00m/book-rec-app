@@ -1,7 +1,7 @@
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import '../../../app/globals.css'
 import * as React from 'react';
 import HeaderAppBar from "@/components/layout-components/header-components";
 import MuiProvider from "../../theme-container";
@@ -29,11 +29,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-          style={{backgroundColor: 'white', color: 'black'}}
-        >
           <AppRouterCacheProvider>
             {/* <MuiProvider> */}
               <HeaderAppBar /> 
@@ -41,7 +36,5 @@ export default function RootLayout({
             {/* </MuiProvider> */}
           </AppRouterCacheProvider>
           
-      </body>
-    </html>
   );
 }

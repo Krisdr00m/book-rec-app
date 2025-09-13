@@ -16,7 +16,6 @@ const navItems = [{name: "Home", route: "/"}, {name: "Thinkers", route: "/"}, {n
 
 
 export default function HeaderAppBar() {
-  
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
