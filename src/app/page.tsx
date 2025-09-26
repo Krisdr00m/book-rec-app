@@ -15,11 +15,11 @@ export default function Entry() {
 
   useEffect(() => {
      if(userSession){
-      router.push('general-pages/main-pages/home-page')
+      router.push('/general-pages/main-pages/home-page')
     }
     else{
       setIsLoading(false);
-      router.push('general-pages/auth-page/mui-sign-in')
+      router.push('/general-pages/auth-page/mui-sign-in')
     }
   }, [userSession, router]);
 

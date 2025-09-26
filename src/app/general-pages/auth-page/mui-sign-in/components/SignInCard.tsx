@@ -58,7 +58,7 @@ export default function SignInCard() {
     const {loginData,loginError} = await signInWithEmail(data.get('email') as string, data.get('password') as string)
     if(loginData.user){
       console.log("login successful, redirecting...");  
-      router.push("main-pages/indiv-page/1")
+      router.push("/general-pages/main-pages/home-page")
     }
     else{
       console.log("login error:", loginError);
