@@ -1,7 +1,7 @@
 import Image from "next/image";
-import SearchComponent from "@/components/search-actions-components/search-component";
-import MediaCard from "@/components/book-components/book-card";
-import HorizontalSlider from "@/components/book-components/slide-panel";
+import SearchComponent from "../components/search-actions-components/search-component";
+import MediaCard from "../components/book-components/book-card";
+import HorizontalSlider from "../components/book-components/slide-panel";
 
 export default function HomePage(){
     const items = Array.from({ length: 20 }, (_, i) => `Item ${i + 1}`)

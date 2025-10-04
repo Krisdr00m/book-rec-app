@@ -24,7 +24,7 @@ export default function MediaCard({
     description = 'Greatest book in all of fiction',
     author = 'Pierce Brown',
     isHome = true,
-    indivLink = "/main-pages/indiv-page/1",
+    indivLink = "indiv-page/1",
 }: MediaCardProps){
     if(!isHome){
       return (

@@ -6,7 +6,7 @@ import BookMasonarySingle from './single-masonary-comp';
 
 let books = Array.from({length: 50}, (_, i) =>({
     title: 'Red Rising ${i}' ,
-    indivLink: '/main-pages/indiv-page/1',
+    indivLink: 'indiv-page/1',
     coverImage: 'https://m.media-amazon.com/images/I/81wGzzxqHSL.jpg',
 }))
 
