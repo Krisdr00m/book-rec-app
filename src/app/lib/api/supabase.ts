@@ -3,7 +3,7 @@ import { createBrowserClient } from '@supabase/ssr'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY as string
-const supabaseService = process.env.SUPABASE_SERVICE_ROLE as string
+const supabaseService = process.env.SUPABSE_SERVICE_ROLE as string
 
 if (!supabaseUrl || !supabaseKey) {
   console.log("subasepase info:", supabaseUrl, supabaseKey, supabaseService);
