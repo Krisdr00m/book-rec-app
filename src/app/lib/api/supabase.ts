@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { createBrowserClient } from '@supabase/ssr'
+import { Database } from '@/database.types'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY as string
@@ -13,18 +14,18 @@ if (!supabaseUrl || !supabaseKey) {
 export function createSupaClient() {
   console.log('Creating Supabase client with URL:', supabaseUrl);
   console.log('Using Supabase Key:', supabaseKey ? 'Provided' : 'Not Provided');
-  return createClient(supabaseUrl, supabaseKey);
+  return createClient<Database>(supabaseUrl, supabaseKey);
 };
 
 export function createBrowserCli() {
-  return createBrowserClient(
+  return createBrowserClient<Database>(
     supabaseUrl!,
     supabaseKey!
   )
 }
 
 export function createAuthClient(){
-  return createClient(supabaseUrl,supabaseService, {
+  return createClient<Database>(supabaseUrl,supabaseService, {
   auth: {
     autoRefreshToken: false,
     persistSession: false
