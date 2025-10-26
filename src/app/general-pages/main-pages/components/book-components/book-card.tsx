@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Link from 'next/link';;
 import { Database } from '@/database.types';
 import { createBrowserCli } from '@/src/app/lib/api/supabase';
+import { createAuthClient } from '@/src/app/lib/api/supabase';
 
 
 interface MediaCardProps {  
@@ -34,31 +35,31 @@ export default async function MediaCard({
     // isHome = true,
     // indivLink = "indiv-page/1",
 }: MediaCardProps){
-  const browserClient = createBrowserCli();
+  const browserClient = createAuthClient();
   let image;
-  const { data: imgUrl} = await browserClient.storage
-         .from("books")
+  const { data} = await browserClient.storage
+         .from('book-covers')
          .getPublicUrl(`${book?.coverurl}`);
 
-    if(!isHome && imgUrl){
+    if(!isHome && data){
       return (
         <div>
             <Card sx={{width: '30vh' , height: "50vh" }}>
               <CardMedia
                 sx={{ height: '100%', width: '100%' }}
-                image = {imgUrl.publicUrl}
+                image = {data.publicUrl}
               />
             </Card>
         </div>
 
       )
     }
-    else if (imgUrl){
+    else if (data){
       return(
         <Card sx={{ minWidth: 150, maxWidth: 200}}>
           <CardMedia
             sx={{height: '25vh'}}
-            image={imgUrl.publicUrl}
+            image={data.publicUrl}
             title={book.title}
           />
           <CardActions>

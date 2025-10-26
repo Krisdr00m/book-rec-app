@@ -79,11 +79,11 @@ function alter_data(data) {
                 case 1:
                     if (!(_i < data_1.length)) return [3 /*break*/, 4];
                     row = data_1[_i];
-                    formatedUrl = "Covers/test_images/".concat(row.title, "-M.jpg");
+                    formatedUrl = "test_images/".concat(row.title, "-M.jpg");
                     return [4 /*yield*/, supabase.from('books').update({ coverurl: formatedUrl }).eq('id', row.id)];
                 case 2:
                     _a = _b.sent(), data_2 = _a.data, error = _a.error;
-                    console.log(error);
+                    console.log(data_2, error);
                     _b.label = 3;
                 case 3:
                     _i++;

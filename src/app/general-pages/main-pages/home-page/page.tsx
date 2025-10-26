@@ -3,9 +3,10 @@ import SearchComponent from "../components/search-actions-components/search-comp
 import MediaCard from "../components/book-components/book-card";
 import HorizontalSlider from "../components/book-components/slide-panel";
 import { createBrowserCli } from "@/src/app/lib/api/supabase";
+import { createAuthClient } from "@/src/app/lib/api/supabase";
 
 export default async function HomePage(){
-    const browserClient = createBrowserCli()
+    const browserClient = createAuthClient()
 
     const {data, error} = await browserClient
     .from('books')

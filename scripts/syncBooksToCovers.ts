@@ -34,7 +34,7 @@ async function extract_data(){
 async function alter_data(data:{id: any, title:any}[]) {
 
     for (const row of data){
-        const formatedUrl = `Covers/test_images/${row.title}-M.jpg`
+        const formatedUrl = `test_images/${row.title}-M.jpg`
         const {data, error} = await supabase.from('books').update({coverurl: formatedUrl}).eq('id', row.id);
 
         console.log(data, error)
